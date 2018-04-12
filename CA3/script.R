@@ -14,6 +14,8 @@ q3_col <- c(5, 2, 5, 4, 1)
 q4_col <- c(5, 5, 5, NA, 2) # NA is inserted in place of the missing data for this attribute
 q5_col <- c(5, 5, 2, NA, 1)
 
+#
+
 # Construct a data frame using the data from all vectors above
 my_data <- data.frame(date_col, country_col, gender_col, age_col, q1_col, q2_col, q3_col, q4_col, q5_col)
 
