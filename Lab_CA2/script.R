@@ -49,7 +49,8 @@ mean(!complete.cases(Data_Post))
 str(Data_Post)
 
 
-# 4.Remove or replace missing entries with a suitable identifier. Decide whether it is best to remove missing data or to recode it. 
+# 4.Remove or replace missing entries with a suitable identifier. 
+#Decide whether it is best to remove missing data or to recode it. 
 
 
 # summary & str of the data frame before changes
@@ -81,14 +82,15 @@ str(Data_Post)
 # using attach function in order to avoid repeating adding the data frame and $
 attach(Data_Post)
 
-Data_County <- Data_Post[order(decreasing = FALSE, County),]
+Data_Post <- Data_Post[order(decreasing = FALSE, County),]
 
 # confirm the change in the dataset
 
-head(Data_County, n = 10)
+head(Data_Post, n = 10)
 
 # varify how it effect in the strucutre of the data frame
-str(Data_County)
+str(Data_Post)
+
 
 # 6. Align all attributes and relevant data. #
 
@@ -100,76 +102,74 @@ str(Data_Post)
 
 # align all attribute data through sapply function
 
-format_data <- rapply(Data_Post, as.character, classes = "factor", how = "replace")
-sapply(format_data, mode)
+Data_Post <- rapply(Data_Post, as.character, classes = "factor", how = "replace")
+sapply(Data_Post, mode)
 
 # varify how it effect in the strucutre of the data frame
-str(format_data)
+str(Data_Post)
 
 # 7. Move the primary key identifier to the start of the dataset
 
 # summary & str of the data frame before changes
 
-summary(format_data)
+summary(Data_Post)
 
-str(format_data)
+str(Data_Post)
 
 # load the upated data on to new new_data frame
 
-new_data <- subset(format_data, select = c(15, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14))
+Data_Post <- subset(Data_Post, select = c(15, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14))
 
-head(new_data)
+head(Data_Post)
 
 # str of new data
 
-str(new_data)
+str(Data_Post)
 
 # 8. Create a new dataset called Limavady_data. Store within it only information that has locality, townland and town containing the name “Limavady”. Store this information in an external csv file called Limavady
 
 # summary & str of the data frame before changes
 
-summary(new_data)
+summary(Data_Post)
 
-str(new_data)
+str(Data_Post)
 
-attach(new_data)
+attach(Data_Post)
 
-Limavady_data = subset(new_data, grepl('LIMAVADY', Locality) & grepl('LIMAVADY', Townland) & grepl('LIMAVADY', Town))
+Limavady_data <- subset(Data_Post, grepl('LIMAVADY', Locality) & grepl('LIMAVADY', Townland) & grepl('LIMAVADY', Town))
 
-summary(Limavady_data)
+head(Limavady_data)
+str(Limavady_data)
 
-write.csv(Limavady_data, file = "Limavady.csv", quote = FALSE, na = "", row.names = FALSE)
+write.csv(Limavady_data, file = "Limavady_test.csv", row.names = FALSE)
+
+# reading the file
+
+Limavady <- read.csv("c:/Users/pvashisth/Source/Repos/DataScience/Lab_CA2/Limavady_test.csv", sep = ",", header = T)
 
 # str of the data frame after changes applied
 
-str(Limavady_data)
-
-Limavady_data
-
+str(Limavady)
+head(Limavady)
 
 # 9. Save the modified dataset in a csv file called CleanNIPostcodeData
 
 
 # summary & str of the data frame before changes
 
-summary(new_data)
+summary(Limavady)
 
-str(new_data)
+st(Limavady)
 
 #Save the contents of new_data to a csv file called "CleanNIPostcodeData.csv"
-write.csv(new_data, file = "CleanNIPostcodeData.csv", quote = FALSE, na = "", row.names = FALSE)
+write.csv(Limavady, file = "CleanNIPostcodeData.csv", row.names = FALSE)
+
+# reading the file
+
+CleanNIPostcodeData <- read.csv("c:/Users/pvashisth/Source/Repos/DataScience/Lab_CA2/CleanNIPostcodeData.csv", sep = ",", header = T)
 
 # summary & str of the data frame before changes
 
-summary(new_data)
+summary(CleanNIPostcodeData)
 
-str(new_data)
-
-
-## assuming you have a folder full of .csv's to merge
-## csv's must all have identical column names.
-
-folder <- "./path/to/csv/files"
-filenames <- list.files(folder)
-
-all_files <- Reduce(rbind, lapply(filenames, read.csv))
+str(CleanNIPostcodeData)
