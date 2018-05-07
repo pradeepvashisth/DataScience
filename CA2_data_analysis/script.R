@@ -53,6 +53,12 @@ summary(gasdata_model)
 TukeyHSD(gasdata_model)
 
 
+# upload the package and library
+
+install.packages("pwr")
+
+library(pwr)
+
 # sample size determination, since we have all info I just want to varify what will be the power
 
 pwr.anova.test(k = 4, n = 104, sig.level = 0.05, f = 0.25)
